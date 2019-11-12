@@ -1,5 +1,3 @@
-// This is the latest from PC.
-
 #include <iostream>
 #include <ctime>
 #include <queue>
