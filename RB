@@ -1,0 +1,40 @@
+#include <iostream>
+#include <ctime>
+#include <queue>
+#include <string>
+
+using namespace std;
+
+template <class T>
+class RB;
+
+template <class T>
+T& max(T& left, T& right) {
+	if (left > right)
+		return left;
+	else
+		return right;
+}
+
+template <class T>
+T max(const T& left, const T& right) {
+	if (left > right)
+		return left;
+	else
+		return right;
+}
+
+template <class T>
+class RBNode {
+	RBNode<T>* parent, * left, * right;
+	int height;
+	T data;
+	string color;
+public:
+	friend class RB<T>;
+	RBNode(const T& newdata = T(), RBNode<T>* newparent = nullptr,
+		RBNode<T>* newleft = nullptr, RBNode<T>* newright = nullptr) :
+		data(newdata), parent(newparent), left(newleft), right(newright) {
+		calcHeight(); 
+	}
+};
