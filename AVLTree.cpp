@@ -1,3 +1,5 @@
+// This is another test.
+
 #include <iostream>
 #include <ctime>
 #include <queue>
@@ -24,33 +26,33 @@ T max(const T& left, const T& right) {
 }
 
 template <class T>
-class AVLNode{
-    AVLNode<T>* parent, *left, *right;
+class AVLNode {
+    AVLNode<T>* parent, * left, * right;
     int height;
     T data;
 public:
     friend class AVL <T>;
     AVLNode(const T& newdata = T(), AVLNode<T>* newparent = nullptr, AVLNode<T>* newleft = nullptr,
-            AVLNode<T>* newright = nullptr) :
-            data(newdata), parent(newparent), left(newleft), right(newright) {
+        AVLNode<T>* newright = nullptr) :
+        data(newdata), parent(newparent), left(newleft), right(newright) {
         calcHeight();
     }
     void calcHeight() {
-        int leftHeight = -1;	// null height, will turn into 0 at the end if left/right == nullptr
-        int rightHeight = -1;	// null height
+        int leftHeight = -1;    // null height, will turn into 0 at the end if left/right == nullptr
+        int rightHeight = -1;   // null height
         if (left != nullptr)
             leftHeight = left->height;
         if (right != nullptr)
             rightHeight = right->height;
-        height = max(leftHeight, rightHeight) + 1;	// let's use the site to figure out how this line works
-        if (parent)	// Update all parent heights also
+        height = max(leftHeight, rightHeight) + 1;  // let's use the site to figure out how this line works
+        if (parent) // Update all parent heights also
             parent->calcHeight();
     }
 
     void printInOrder() const {
         if (left != nullptr)
             left->printInOrder();
-        cout << data <<"\t"<<height<< endl;
+        cout << data << "\t" << height << endl;
         if (right != nullptr)
             right->printInOrder();
     }
@@ -64,7 +66,7 @@ public:
             rightSize = right->size();
         return 1 + leftSize + rightSize;
     }
-    /*	int height()const{
+    /*  int height()const{
             int leftSize = -1;
             int rightSize = -1;
             if (left != nullptr)
@@ -91,8 +93,8 @@ void AVLNode<T>::printPostOrder()const {
 }
 
 template <class T>
-class AVL{
-    AVLNode<T>* root;	// parent, left, and right pointers of our new root node are init null
+class AVL {
+    AVLNode<T>* root;   // parent, left, and right pointers of our new root node are init null
     int size;
     AVLNode<T>* recursiveCopy(AVLNode<T>* toCopy);
     void singleCCR(AVLNode<T>*& point);
@@ -109,10 +111,10 @@ public:
     virtual ~AVL() { clear(); }
     AVL& operator=(const AVL<T>& rhs);
 
-    bool isInTree(const T& toFind) const{ return find(toFind) != nullptr; }	// not used anywhere
-    bool isEmpty()const{ return root == nullptr; }	// only used for clear()
-    int getSize()const { return size; }	// not used anywhere
-    void remove(const T& toRemove){
+    bool isInTree(const T& toFind) const { return find(toFind) != nullptr; }    // not used anywhere
+    bool isEmpty()const { return root == nullptr; } // only used for clear()
+    int getSize()const { return size; } // not used anywhere
+    void remove(const T& toRemove) {
         AVLNode<T>* item = find(toRemove);
         if (item != nullptr)
             remove(item);
@@ -121,7 +123,7 @@ public:
     void insert(const T&, AVLNode<T>*& point);
     void remove(AVLNode<T>*);
     AVLNode<T>* find(const T& toFind) const;
-    void clear(){ while (!isEmpty()) remove(root); }
+    void clear() { while (!isEmpty()) remove(root); }
     void printInOrder() const { root->printInOrder(); }
     void printPostOrder() const { root->printPostOrder(); }
     void printLevelOrder() const;
@@ -129,16 +131,16 @@ public:
 
 template <class T>
 void AVL<T>::printLevelOrder() const {
-    queue<AVLNode<T>*> q;	// we will fill q to store random integers from main()
-    q.push(root);	// push the very first node
-    while (!q.empty()){	// this shouldn't be empty, since we just added the first node
-        AVLNode<T>* front = q.front();	// front is initially root (see the code above while loop)
-        cout << front->data << "\t" << front->height << endl;	// height determined via calcHeight()
-        if (front->left!=nullptr)	// if root's left node isn't null...
-            q.push(front->left);	// add the left node to the queue
-        if (front->right)	// if root's right node isn't null...
-            q.push(front->right);	// add the right node to the queue
-        q.pop();	// remove root so that the children are now are at the front of the queue
+    queue<AVLNode<T>*> q;   // we will fill q to store random integers from main()
+    q.push(root);   // push the very first node
+    while (!q.empty()) {    // this shouldn't be empty, since we just added the first node
+        AVLNode<T>* front = q.front();  // front is initially root (see the code above while loop)
+        cout << front->data << "\t" << front->height << endl;   // height determined via calcHeight()
+        if (front->left != nullptr) // if root's left node isn't null...
+            q.push(front->left);    // add the left node to the queue
+        if (front->right)   // if root's right node isn't null...
+            q.push(front->right);   // add the right node to the queue
+        q.pop();    // remove root so that the children are now are at the front of the queue
     }
 }
 template <class T>
@@ -163,7 +165,7 @@ void AVL<T>::singleCR(AVLNode<T>*& point) {
     parent->right = grandparent;
     if (grandparent->left != nullptr) //if we now have a left child, update its parent pointer
         grandparent->left->parent = grandparent;
-    if (parent->parent == nullptr)	//if we were the root, update the root!
+    if (parent->parent == nullptr)  //if we were the root, update the root!
         root = parent;
     else if (parent->parent->left == grandparent)
         parent->parent->left = parent;
@@ -240,7 +242,7 @@ void AVL<T>::remove(AVLNode<T>* toRemove) {
             toRemove->parent->left = toRemove->left;
             toRemove->left->parent = toRemove->parent;
         }
-        else{
+        else {
             toRemove->parent->right = toRemove->left;
             toRemove->left->parent = toRemove->parent;
         }
@@ -256,14 +258,14 @@ void AVL<T>::remove(AVLNode<T>* toRemove) {
             toRemove->parent->left = toRemove->right;
             toRemove->right->parent = toRemove->parent;
         }
-        else{
+        else {
             toRemove->parent->right = toRemove->right;
             toRemove->right->parent = toRemove->parent;
         }
         delete toRemove;
         size--;
     }
-    else{ //sigh... two children!
+    else { //sigh... two children!
         AVLNode<T>* temp = toRemove->right;
         while (temp->left != nullptr)
             temp = temp->left;
@@ -286,28 +288,30 @@ AVLNode<T>* AVL<T>::find(const T& toFind) const {
 }
 
 template <class T>
-void AVL<T>::insert(const T& toInsert, AVLNode<T>*& point) {	// 'point' is init root when via main()'s one-argument insert
+void AVL<T>::insert(const T& toInsert, AVLNode<T>*& point) {    // 'point' is init root when via main()'s one-argument insert
     if (point == nullptr) {
-        point = new AVLNode<T>(toInsert);	// to-be-inserted value will eventually replace root recursively
-    } else if (toInsert < point->data) {	// if the to-be-inserted value is less than root's current value...
-        insert(toInsert, point->left);	// recursively call insert with 'root' as the left node
+        point = new AVLNode<T>(toInsert);   // to-be-inserted value will eventually replace root recursively
+    }
+    else if (toInsert < point->data) {  // if the to-be-inserted value is less than root's current value...
+        insert(toInsert, point->left);  // recursively call insert with 'root' as the left node
         point->left->parent = point; //update parent pointer to be the now-inserted value
         point->calcHeight();
-        if (heightDiff(point) > 1) {	// checks to see if heights differ by more than 1
-            doRotation(point);	// rotates to fix
+        if (heightDiff(point) > 1) {    // checks to see if heights differ by more than 1
+            doRotation(point);  // rotates to fix
         }
-    } else {	// if the to-be-inserted value is greater than the root's current value...
-        insert(toInsert, point->right);	// recursively call insert with 'root' as the right node
-        point->right->parent = point;	// update parent pointer to be the now-inserted value
+    }
+    else {  // if the to-be-inserted value is greater than the root's current value...
+        insert(toInsert, point->right); // recursively call insert with 'root' as the right node
+        point->right->parent = point;   // update parent pointer to be the now-inserted value
         point->calcHeight();
-        if (heightDiff(point) > 1) {	// checks to see if heights differ by more than 1
-            doRotation(point);	// rotates to fix
+        if (heightDiff(point) > 1) {    // checks to see if heights differ by more than 1
+            doRotation(point);  // rotates to fix
         }
     }
 }
 
 template <class T>
-void AVL<T>::insert(const T& toInsert) {	// with just one argument, the second argument by default is 'root'
+void AVL<T>::insert(const T& toInsert) {    // with just one argument, the second argument by default is 'root'
     insert(toInsert, root);
 }
 template <class T>
@@ -319,23 +323,23 @@ void AVL<T>::doRotation(AVLNode<T>* point) {
     if (point->right != nullptr)
         rightChild = point->right->height;
 
-    if (leftChild > rightChild) {	// CR, but is it single or double?
-        int leftGC = -1;	// GC means grand-child
+    if (leftChild > rightChild) {   // CR, but is it single or double?
+        int leftGC = -1;    // GC means grand-child
         int rightGC = -1;
         if (point->left->left != nullptr)
             leftGC = point->left->left->height;
         if (point->left->right != nullptr)
             rightGC = point->left->right->height;
-        if (leftGC > rightGC)	// single rotation
+        if (leftGC > rightGC)   // single rotation
             singleCR(point);
         else
             doubleCR(point);
     }
-    else {	//definitely a counter-clockwise rotation, but which one? We'll find out through the if statements below
+    else {  //definitely a counter-clockwise rotation, but which one? We'll find out through the if statements below
         int leftGC = -1;
         int rightGC = -1;
-        if (point->right->left != nullptr)	// if the right node's left child (ie. left GC) isn't null...
-            leftGC = point->right->left->height;	// set left GC to be the height of the left GC
+        if (point->right->left != nullptr)  // if the right node's left child (ie. left GC) isn't null...
+            leftGC = point->right->left->height;    // set left GC to be the height of the left GC
         if (point->right->right != nullptr)
             rightGC = point->right->right->height;  // set right GC to be the height of the right GC
         if (leftGC > rightGC) // double rotation -- if the left GC's height > right GC's height...
@@ -361,7 +365,7 @@ int main() {
     srand(time(NULL));
     for (int i = 0; i < 25; i++) {
         int val = rand() % 1000;
-        b.insert(val);	// this version of insert only has one argument
+        b.insert(val);  // this version of insert only has one argument
     }
     b.printLevelOrder();
 }
